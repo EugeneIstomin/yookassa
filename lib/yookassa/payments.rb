@@ -26,7 +26,7 @@ module Yookassa
       Entity::Payment.new(**data.merge(idempotency_key: idempotency_key))
     end
 
-    def list(filters: {})
+    def list(filters)
       data = get("payments", query: filters)
       Entity::PaymentCollection.new(**data)
     end

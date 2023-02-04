@@ -10,7 +10,7 @@ module Yookassa
     attr_reader :http
 
     def initialize(shop_id: Yookassa.config.shop_id, api_key: Yookassa.config.api_key, oauth_token: nil)
-      @http = HTTP.headers(accept: "application/json")
+      @http = HTTP.basic_auth(user: Yookassa.config.shop_id, pass: Yookassa.config.api_key).headers(accept: "application/json")
 
       if shop_id && api_key
         @http.basic_auth(user: shop_id, pass: api_key)

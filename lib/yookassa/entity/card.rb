@@ -13,11 +13,11 @@ module Yookassa
 
       # last4 [string, required]
       # Last 4 digits of the card's number.
-      attribute :last4, Types::Coercible::Integer
+      attribute :last4, Types::String
 
       # expiry_month [string, required]
       # Expiration date, month, MM.
-      attribute? :expiry_month, Types::Coercible::Integer
+      attribute? :expiry_month, Types::String
 
       # expiry_year [string, required]
       # Expiration date, year, YYYY.
