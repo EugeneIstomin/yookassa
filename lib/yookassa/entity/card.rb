@@ -39,7 +39,7 @@ module Yookassa
       # source [string, optional]
       # Source of bank card details. Possible values: apple_pay, google_pay.
       # For payments where the user selects a card saved in Apple Pay or Google Pay.
-      attribute? :source, Types::String.enum("apple_pay", "google_pay")
+      attribute? :source, Types::String.enum("apple_pay", "google_pay", "mir_pay")
     end
   end
 end
