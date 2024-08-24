@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "http"
-require_relative "./entity/error"
+require_relative "entity/error"
 
 module Yookassa
   class Client
@@ -13,7 +13,7 @@ module Yookassa
       @http = HTTP.basic_auth(user: Yookassa.config.shop_id, pass: Yookassa.config.api_key).headers(accept: "application/json")
 
       if shop_id && api_key
-        @http.basic_auth(user: shop_id, pass: api_key)
+        @http = @http.basic_auth(user: shop_id, pass: api_key)
       elsif oauth_token
         @http.headers("Authorization" => "Bearer #{oauth_token}")
       else
