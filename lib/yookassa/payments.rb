@@ -1,19 +1,25 @@
 # frozen_string_literal: true
 
-require_relative "./client"
-require_relative "./entity/payment"
-require_relative "./entity/collection"
+require_relative "client"
+require_relative "entity/payment"
+require_relative "entity/collection"
 
 module Yookassa
   class Payments < Client
     def find(payment_id:)
       data = get("payments/#{payment_id}")
       Entity::Payment.new(**data)
+    rescue Dry::Struct::Error
+      data
     end
 
     def create(payment:, idempotency_key: SecureRandom.hex(10))
       data = post("payments", payload: payment, idempotency_key: idempotency_key)
-      Entity::Payment.new(**data.merge(idempotency_key: idempotency_key))
+      if data["type"] == "error"
+        Entity::Error.new(data)
+      else
+        Entity::Payment.new(**data.merge(idempotency_key: idempotency_key))
+      end
     end
 
     def capture(payment_id:, idempotency_key: SecureRandom.hex(10))
